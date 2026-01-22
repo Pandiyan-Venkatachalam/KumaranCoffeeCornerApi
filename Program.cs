@@ -34,7 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseHttpsRedirection(); 
+app.UseHttpsRedirection(); 
 
 app.UseRouting();
 
@@ -110,3 +110,4 @@ using (var scope = app.Services.CreateScope())
 
 
 app.Run();
+
