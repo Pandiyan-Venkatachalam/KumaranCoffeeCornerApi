@@ -1,22 +1,19 @@
-# .NET 8.0 SDK use panni build pannanum
+# 1. Build Stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Project files-ah copy panni restore pannanum
-COPY *.sln .
-COPY *.csproj ./
-RUN dotnet restore
+COPY ["KumaranCoffeeCorner.csproj", "./"]
+RUN dotnet restore "KumaranCoffeeCorner.csproj"
 
-# Moththa code-ahyum copy panni publish pannanum
 COPY . .
-RUN dotnet publish -c Release -o out
+RUN dotnet publish "KumaranCoffeeCorner.csproj" -c Release -o /app/out
 
-# Runtime stage
+# 2. Runtime Stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app/out .
 
-# Render dynamic port set panna ithu mukkiyam
+# Render dynamic port binding
 ENV ASPNETCORE_URLS=http://+:8080
 EXPOSE 8080
 
